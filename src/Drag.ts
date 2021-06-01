@@ -1,4 +1,4 @@
-class drag {
+export default class Drag {
     // 元素
     element: HTMLElement;
     // 屏幕尺寸
@@ -67,6 +67,7 @@ class drag {
     }
     private move(event: TouchEvent): void {
         if(!this.flag)return
+        // offset 问题未解决
         var rect = (event.target as any).getBoundingClientRect();        
         let offsetX =event.targetTouches[0].pageX - rect.left;
         let offsetY =event.targetTouches[0].pageY - rect.top;
