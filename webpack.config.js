@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
@@ -57,5 +58,17 @@ module.exports = {
       title: "drag",
       template:"./src/index.html"
     })
-  ]
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      terserOptions: {
+        format: {
+          comments: false,
+        },
+      },
+      test: /\.js(\?.*)?$/i,
+      extractComments: false,
+    })],
+  },
 };
