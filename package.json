@@ -1,16 +1,15 @@
 {
-  "name": "drag",
+  "name": "better-draggble-ball",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a drag floating ball component developed based on typescript, which can be directly introduced into your project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack serve --open"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",

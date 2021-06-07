@@ -1,4 +1,7 @@
 import './index.scss'
 import Drag from './Drag'
-const dragDom=document.getElementById('drag')
-const d=new Drag(dragDom,true)
+let dragDom=document.createElement('div')
+dragDom.setAttribute('id','drag')
+let body=document.getElementsByTagName('body')[0]
+body.appendChild(dragDom)
+new Drag(dragDom,true)

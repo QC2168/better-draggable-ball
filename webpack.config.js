@@ -4,12 +4,14 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    index:"./src/index.ts",
-    Drag:"./src/Drag.ts"
+    index: "./src/index.ts",
+    Drag: "./src/Drag.ts"
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, "dist"),
+    compress: false,
+    port: 9000
   },
   module: {
     rules: [
@@ -17,9 +19,9 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
+            presets: ["@babel/preset-env"]
           }
         }
       },
@@ -30,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.s[ac]ss$/i,
@@ -56,19 +58,21 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "drag",
-      template:"./src/index.html"
+      template: "./src/index.html"
     })
   ],
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        format: {
-          comments: false,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false
+          }
         },
-      },
-      test: /\.js(\?.*)?$/i,
-      extractComments: false,
-    })],
-  },
+        test: /\.js(\?.*)?$/i,
+        extractComments: false
+      })
+    ]
+  }
 };
