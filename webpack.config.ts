@@ -13,6 +13,12 @@ const config: Configuration = {
   entry: {
     index: './src/index.ts',
     Drag: './src/Drag.ts',
+    Option: './src/Options.ts',
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -55,11 +61,6 @@ const config: Configuration = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-  },
-  output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,3 +1,15 @@
+// import Options from './Options';
+interface DefaultPositionType {
+  x?: number,
+  y?: number
+}
+interface Options{
+  autoAdsorbent?: boolean;
+
+  hideOffset?: number;
+
+  defaultPosition?: DefaultPositionType;
+}
 export default class Drag {
     // 元素
     element: HTMLElement;
@@ -25,12 +37,16 @@ export default class Drag {
     elementOffsetY: number;
 
     // 是否处于拖动状态
-    flag: boolean;
+    moving: boolean;
 
     // 吸附
     autoAdsorbent: boolean;
 
-    constructor(element: HTMLElement, autoAdsorbent: boolean = false) {
+    // 隐藏
+    hideOffset: number;
+
+    constructor(element: HTMLElement, dConfig:Options) {
+      this.checkParams(dConfig);
       this.element = element;
       this.screenWidth = document.body.scrollWidth || window.screen.width;
       this.screenHeight = document.body.scrollHeight || window.screen.height;
@@ -42,14 +58,22 @@ export default class Drag {
       this.elementY = 0;
       this.elementOffsetX = 0;
       this.elementOffsetY = 0;
-      this.flag = false;
-      this.autoAdsorbent = autoAdsorbent;
+      this.moving = false;
+      this.autoAdsorbent = dConfig.autoAdsorbent;
+      this.hideOffset = this.elementWidth * dConfig.hideOffset;
       if (!this.isPhone) {
         console.error('警告！！当前插件版本只兼容移动端');
       }
       // 默认位置
-      this.setElementPosition(0, 0);
+      this.setElementPosition(dConfig.defaultPosition.x, dConfig.defaultPosition.y);
       this.watchTouch();
+    }
+
+    private checkParams(dConfig:Options) {
+      // 处理下Options未配置的参数
+      this.autoAdsorbent = 'autoAdsorbent' in dConfig ? dConfig.autoAdsorbent : false;
+      this.hideOffset = 'hideOffset' in dConfig ? dConfig.hideOffset : 0;
+      [this.elementX, this.elementY] = 'defaultPosition' in dConfig ? [dConfig.defaultPosition.x && 0, dConfig.defaultPosition.y && 0] : [0, 0];
     }
 
     private watchTouch(): void {
@@ -60,11 +84,11 @@ export default class Drag {
         const docScrollTop = document.documentElement.scrollTop;
         this.elementOffsetX = event.targetTouches[0].pageX - rect.left;
         this.elementOffsetY = event.targetTouches[0].pageY - rect.top - docScrollTop;
-        this.flag = true;
+        this.moving = true;
         this.element.addEventListener('touchmove', this.move.bind(this), { passive: false });
       });
       window.addEventListener('touchend', () => {
-        this.flag = false;
+        this.moving = false;
         document.removeEventListener('touchmove', this.move);
         if (this.autoAdsorbent) this.adsorbent();
       });
@@ -74,22 +98,26 @@ export default class Drag {
       // 溢出处理
       // 溢出范围
       // 但页面超出屏幕范围，计算当前屏幕范围
-      const rightScope = this.screenWidth - this.elementWidth;
+
+      const leftScope = this.moving ? 0 : 0 - this.hideOffset;
+      // 当前屏幕right最大值
+      const rs = this.screenWidth - this.elementWidth;
+      const rightScope = this.moving ? rs : rs + this.hideOffset;
       const bottomScope = this.screenHeight - this.elementHeight;
-      if (x <= 0 && y <= 0) {
-        [x, y] = [0, 0];
+      if (x <= leftScope && y <= 0) {
+        [x, y] = [leftScope, 0];
       } else if (x >= rightScope && y <= 0) {
         [x, y] = [rightScope, 0];
-      } else if (x <= 0 && y >= bottomScope) {
-        [x, y] = [0, bottomScope];
+      } else if (x <= leftScope && y >= bottomScope) {
+        [x, y] = [leftScope, bottomScope];
       } else if (x >= rightScope && y >= bottomScope) {
         [x, y] = [rightScope, bottomScope];
       } else if (x > rightScope) {
         x = rightScope;
       } else if (y > bottomScope) {
         y = bottomScope;
-      } else if (x <= 0) {
-        x = 0;
+      } else if (x <= leftScope) {
+        x = leftScope;
       } else if (y <= 0) {
         y = 0;
       }
@@ -101,7 +129,7 @@ export default class Drag {
 
     private move(event: TouchEvent): void {
       event.preventDefault();
-      if (!this.flag) return;
+      if (!this.moving) return;
       this.elementY = (event.touches[0].pageX - this.elementOffsetX);
       this.elementX = (event.touches[0].pageY - this.elementOffsetY);
       const ex = (event.touches[0].pageX - this.elementOffsetX);
@@ -135,9 +163,9 @@ export default class Drag {
       const rightScope = this.screenWidth - this.elementWidth;
       // 根据中心点来判断吸附方向
       if (this.elementX < screenCenterY) {
-        this.animate(0, 10);
+        this.animate(0 - (this.hideOffset), 10);
       } else {
-        this.animate(rightScope, 10);
+        this.animate(rightScope + (this.hideOffset), 10);
       }
     }
 }
