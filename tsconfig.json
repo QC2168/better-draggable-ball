@@ -10,4 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
   },
+  "include": [
+    "src/**/*"
+],
 }
