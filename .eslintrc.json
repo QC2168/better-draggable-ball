@@ -20,6 +20,7 @@
     "no-param-reassign": "off",
     "import/extensions": "off",
     "no-new": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "class-methods-use-this": "off"
   }
 }
