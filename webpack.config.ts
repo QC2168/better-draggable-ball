@@ -11,8 +11,8 @@ interface Configuration extends WebpackConfiguration {
 const config: Configuration = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   devtool: process.env.NODE_ENV === 'production' ? 'cheap-module-source-map' : 'cheap-module-source-map',
-  target: false,
   entry: {
+    index: './src/index.ts',
     Drag: './src/Drag.ts',
   },
   output: {
@@ -77,20 +77,20 @@ const config: Configuration = {
       exclude: '/node_modules/',
     }),
   ],
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [
-  //     new TerserPlugin({
-  //       terserOptions: {
-  //         format: {
-  //           comments: false,
-  //         },
-  //       },
-  //       test: /\.js(\?.*)?$/i,
-  //       extractComments: false,
-  //     }),
-  //   ],
-  // },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        test: /\.js(\?.*)?$/i,
+        extractComments: false,
+      }),
+    ],
+  },
 };
 
 export default config;
