@@ -68,15 +68,14 @@ export default class Drag {
     // 默认位置
     this.setElementPosition(dConfig.defaultPosition.x, dConfig.defaultPosition.y);
     this.watchTouch();
-    console.log(this);
   }
 
   protected InitParams(dConfig: Options):Options {
     // 处理下Options未配置的参数
     return {
-      autoAdsorbent: dConfig.autoAdsorbent && false,
-      hideOffset: dConfig.hideOffset && 0,
-      defaultPosition: dConfig.defaultPosition && { x: 0, y: 0 },
+      autoAdsorbent: dConfig.autoAdsorbent || false,
+      hideOffset: dConfig.hideOffset || 0,
+      defaultPosition: dConfig.defaultPosition || { x: 0, y: 0 },
     };
   }
 
