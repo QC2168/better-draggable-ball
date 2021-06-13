@@ -9,21 +9,26 @@ interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 const config: Configuration = {
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  devtool: process.env.NODE_ENV === 'production' ? 'cheap-module-source-map' : 'cheap-module-source-map',
+  target: false,
   entry: {
-    index: './src/index.ts',
     Drag: './src/Drag.ts',
-    Option: './src/Options.ts',
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    library: 'Drag',
+    libraryExport: 'default',
+    libraryTarget: 'umd',
+
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: false,
     port: 9000,
+    hot: true,
   },
   module: {
     rules: [
@@ -72,20 +77,20 @@ const config: Configuration = {
       exclude: '/node_modules/',
     }),
   ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        test: /\.js(\?.*)?$/i,
-        extractComments: false,
-      }),
-    ],
-  },
+  // optimization: {
+  //   minimize: true,
+  //   minimizer: [
+  //     new TerserPlugin({
+  //       terserOptions: {
+  //         format: {
+  //           comments: false,
+  //         },
+  //       },
+  //       test: /\.js(\?.*)?$/i,
+  //       extractComments: false,
+  //     }),
+  //   ],
+  // },
 };
 
 export default config;
