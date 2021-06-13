@@ -5,8 +5,7 @@ const dragDom = document.createElement('div');
 dragDom.setAttribute('id', 'drag');
 const body = document.getElementsByTagName('body')[0];
 body.appendChild(dragDom);
-const a = new Drag(dragDom, {
-  defaultPosition: { x: 9, y: 9 },
+new Drag(dragDom, {
+  defaultPosition: { x: 10, y: 10 },
   autoAdsorbent: true,
 });
-console.log(a);
