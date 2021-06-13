@@ -46,13 +46,13 @@ export default class Drag {
   // 隐藏
   hideOffset: number;
 
-  constructor(element: HTMLElement, dConfig: Options) {
+  constructor(element: HTMLElement, dConfig: Options = {}) {
     dConfig = this.InitParams(dConfig);
     this.element = element;
-    this.screenWidth = document.body.scrollWidth || window.screen.width;
-    this.screenHeight = document.body.scrollHeight || window.screen.height;
-    this.elementWidth = this.element.offsetWidth;
-    this.elementHeight = this.element.offsetHeight;
+    this.screenWidth = document.body.scrollWidth || window.screen.width || 0;
+    this.screenHeight = document.body.scrollHeight || window.screen.height || 0;
+    this.elementWidth = this.element.offsetWidth || 0;
+    this.elementHeight = this.element.offsetHeight || 0;
     this.isPhone = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
     this.element.style.position = 'absolute';
     this.elementX = 0;
@@ -68,6 +68,7 @@ export default class Drag {
     // 默认位置
     this.setElementPosition(dConfig.defaultPosition.x, dConfig.defaultPosition.y);
     this.watchTouch();
+    console.log(this);
   }
 
   protected InitParams(dConfig: Options):Options {
