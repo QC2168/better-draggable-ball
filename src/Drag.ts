@@ -49,8 +49,8 @@ export default class Drag {
   constructor(element: HTMLElement, dConfig: Options = {}) {
     dConfig = this.InitParams(dConfig);
     this.element = element;
-    this.screenWidth = document.body.scrollWidth || window.screen.width || 0;
-    this.screenHeight = document.body.scrollHeight || window.screen.height || 0;
+    this.screenWidth = window.innerWidth || window.outerWidth || 0;
+    this.screenHeight = window.innerHeight || window.outerHeight || 0;
     this.elementWidth = this.element.offsetWidth || 0;
     this.elementHeight = this.element.offsetHeight || 0;
     this.isPhone = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);

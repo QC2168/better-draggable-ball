@@ -8,21 +8,22 @@ import ESLintPlugin from 'eslint-webpack-plugin';
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
-const config: Configuration = {
+const config: Configuration[] = [{
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   devtool: process.env.NODE_ENV === 'production' ? 'cheap-module-source-map' : 'cheap-module-source-map',
   entry: {
-    index: './src/index.ts',
     Drag: './src/Drag.ts',
+    'Drag.min': './src/Drag.ts',
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    library: 'Drag',
-    libraryExport: 'default',
-    libraryTarget: 'umd',
-
+    library: {
+      name: 'Drag',
+      type: 'umd',
+      export: 'default',
+    },
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -81,6 +82,8 @@ const config: Configuration = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
+        parallel: 4,
+        include: /\.min\.js$/,
         terserOptions: {
           format: {
             comments: false,
@@ -91,6 +94,7 @@ const config: Configuration = {
       }),
     ],
   },
-};
+},
+];
 
 export default config;
