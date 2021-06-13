@@ -19,11 +19,13 @@ const config: Configuration[] = [{
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    module: true,
     library: {
-      name: 'Drag',
-      type: 'umd',
-      export: 'default',
+      type: 'module',
     },
+  },
+  experiments: {
+    outputModule: true,
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
