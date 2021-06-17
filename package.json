@@ -1,6 +1,6 @@
 {
-  "name": "better-draggble-ball",
-  "version": "1.0.1",
+  "name": "better-draggable-ball",
+  "version": "1.0.0",
   "description": "This is a drag floating ball component developed based on typescript, which can be directly introduced into your project",
   "main": "dist/Drag.js",
   "scripts": {

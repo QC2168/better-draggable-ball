@@ -101,7 +101,6 @@ export default class Drag {
     // 溢出处理
     // 溢出范围
     // 但页面超出屏幕范围，计算当前屏幕范围
-
     const leftScope = this.moving ? 0 : 0 - this.hideOffset;
     // 当前屏幕right最大值
     const rs = this.screenWidth - this.elementWidth;
@@ -158,7 +157,7 @@ export default class Drag {
     }, spd);
   }
 
-  private adsorbent() {
+  private adsorbent():void {
     // 判断吸附方向
     // 屏幕中心点
     const screenCenterY = Math.round(this.screenWidth / 2);
