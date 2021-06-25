@@ -21,6 +21,7 @@
     "import/extensions": "off",
     "no-new": "off",
     "import/no-unresolved": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

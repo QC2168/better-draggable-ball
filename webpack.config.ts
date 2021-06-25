@@ -5,6 +5,27 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 
+// const net = require('net');
+// // 获取端口
+// function getPort(port: number = 9000): Promise<number> {
+//   // 创建服务并监听该端口
+//   const server = net.createServer().listen(port);
+//   return new Promise<number>((resolve, reject) => {
+//     server.on('listening', () => {
+//       server.close();
+//       resolve(port);
+//     });
+
+//     server.on('error', (err:any) => {
+//       if (err.code === 'EADDRINUSE') {
+//         resolve(getPort(port + 1));// 注意这句，如占用端口号+1
+//       } else {
+//         reject(err);
+//       }
+//     });
+//   });
+// }
+
 interface Configuration extends WebpackConfiguration {
   devServer ?: WebpackDevServerConfiguration;
 }
