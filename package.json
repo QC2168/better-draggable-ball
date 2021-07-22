@@ -4,9 +4,9 @@
   "description": "This is a drag floating ball component developed based on typescript, which can be directly introduced into your project",
   "main": "dist/Drag.js",
   "scripts": {
-    "build": "webpack",
     "watch": "webpack --watch",
-    "start": "webpack serve --hot --open"
+    "build": "webpack  --config webpack.build.config.ts",
+    "start": "webpack serve --config webpack.dev.config.ts"
   },
   "files": [
     "dist/"
