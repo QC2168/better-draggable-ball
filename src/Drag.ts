@@ -53,7 +53,7 @@ export default class Drag {
     this.screenHeight = window.innerHeight || window.outerHeight || 0;
     this.elementWidth = this.element.offsetWidth || 0;
     this.elementHeight = this.element.offsetHeight || 0;
-    this.isPhone = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
+    this.isPhone = /(iPhone|iPad|iPod|iOS|Android|OpenHarmony)/i.test(navigator.userAgent);
     this.element.style.position = 'absolute';
     this.elementX = 0;
     this.elementY = 0;
